@@ -21,6 +21,11 @@ gem 'webpacker'
 # Trailblazer
 gem 'trailblazer-rails'
 
+# optional, in case you want Cells.
+gem 'trailblazer-cells'
+gem 'cells-erb'         # Or cells-haml, cells-slim, cells-hamlit.
+gem 'cells-rails'
+
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
@@ -40,6 +45,8 @@ gem 'jbuilder', '~> 2.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+
+# gem 'pry'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
