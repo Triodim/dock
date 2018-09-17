@@ -24,7 +24,10 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    run Post::Create.(params)
+    run Post::Create
+    redirect_to posts_path
+    flash.notice = "The post was successfully saved ddddddd!"
+    #render action: :new
     # @post = Post.new(post_params)
     #
     # respond_to do |format|
