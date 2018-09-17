@@ -19,6 +19,7 @@ gem 'webpacker'
 # gem 'mini_racer', platforms: :ruby
 
 # Trailblazer
+gem 'trailblazer'
 gem 'trailblazer-rails'
 
 # optional, in case you want Cells.
