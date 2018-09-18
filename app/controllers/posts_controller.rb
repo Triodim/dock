@@ -24,10 +24,15 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    run Post::Create
-    redirect_to posts_path
-    flash.notice = "The post was successfully saved ddddddd!"
-    #render action: :new
+    result = Post::Create.(params: params)
+    puts "Result => #{result.success?}"
+    if result.success?
+      flash.notice = "The post \"#{params[:post][:title]}\" was successfully saved!"
+      redirect_to posts_path
+    else
+      flash.notice = "Sorry something went wrong with post \"#{params[:post][:title]}\"."
+      redirect_to new_post_path
+    end
     # @post = Post.new(post_params)
     #
     # respond_to do |format|

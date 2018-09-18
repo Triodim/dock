@@ -22,6 +22,10 @@ gem 'webpacker'
 gem 'trailblazer'
 gem 'trailblazer-rails'
 
+#Reform
+gem 'reform'
+gem 'reform-rails'
+
 # optional, in case you want Cells.
 gem 'trailblazer-cells'
 gem 'cells-erb'         # Or cells-haml, cells-slim, cells-hamlit.
