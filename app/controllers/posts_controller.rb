@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.all
+    #Post::Index.({params[]})
   end
 
   # GET /posts/1
@@ -25,12 +26,14 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     result = Post::Create.(params: params)
-    puts "Result => #{result.success?}"
+    puts "Result => #{result.inspect}"
     if result.success?
       flash.notice = "The post \"#{params[:post][:title]}\" was successfully saved!"
       redirect_to posts_path
     else
       flash.notice = "Sorry something went wrong with post \"#{params[:post][:title]}\"."
+      flash.notice = "The problem is that: \"#{result["result.contract.default"].errors.messages[:title][0]}\"."
+      flash.notice = "The problem is that: \"#{result["result.contract.default"].errors.messages[:body][0]}\"."
       redirect_to new_post_path
     end
     # @post = Post.new(post_params)
