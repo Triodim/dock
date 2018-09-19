@@ -2,21 +2,25 @@ version: '3.7'
 services:
   db:
     image: postgres
+    env_file:
+    - ./.env
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     networks:
-          - dock
+      - dock
 
   web:
     build: .
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    env_file:
+    - ./.env
     volumes:
       - .:/dock
       - bundle_cache:/usr/local/bundle
     ports:
       - "3000:3000"
     networks:
-              - dock
+      - dock
 
 volumes: 
    bundle_cache:

@@ -33,7 +33,10 @@ gem 'reform'
 gem 'reform-rails'
 
 #For docker environment
-#gem 'dotenv-rails'
+gem 'dotenv-rails'
+
+#Frontend
+gem 'bulma-rails'
 
 # optional, in case you want Cells.
 gem 'trailblazer-cells'
@@ -63,7 +66,8 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
-# gem 'pry'
+#
+#gem 'pry'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -16,7 +16,7 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @result = Post::Create.(params: params)
   end
 
   # GET /posts/1/edit
@@ -51,6 +51,7 @@ class PostsController < ApplicationController
 
     if @result.success?
       flash.notice = "The post \"#{params[:post][:title]}\" was successfully saved!"
+      #flash[:alert] = 'ALERT'
       redirect_to posts_path
     else
       title = @result["contract.default"].errors[:title][0]
