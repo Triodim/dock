@@ -1,9 +1,11 @@
-version: '3'
+version: '3.7'
 services:
   db:
     image: postgres
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+    networks:
+          - dock
 
   web:
     build: .
@@ -13,8 +15,11 @@ services:
       - bundle_cache:/usr/local/bundle
     ports:
       - "3000:3000"
-    links:
-      - db:postgresdb
+    networks:
+              - dock
 
 volumes: 
    bundle_cache:
+
+networks:
+  dock:
