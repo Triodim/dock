@@ -23,7 +23,7 @@
 /public/assets
 .byebug_history
 
-# Ignore master key for decrypting credentials and more.
+# Ignore master key for decrypting credentials and more.!!!
 /config/master.key
 /public/packs
 /public/packs-test
@@ -32,4 +32,4 @@ yarn-debug.log*
 .yarn-integrity
 
 .idea
-.env
+/.env
