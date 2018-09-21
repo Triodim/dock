@@ -1,5 +1,3 @@
-require "trailblazer/operation"
-
 class Post::Create < Trailblazer::Operation
 
   step Model( Post, :new )                                 #create a post by calling Post.new

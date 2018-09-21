@@ -1,4 +1,9 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+  <div class="notification is-danger">
+    <button class="delete"></button>
+      <p id="notice"><%= notice %></p>
+  </div>
+<% end %>
 
 <h1 class="has-text-success">New Post</h1>
 

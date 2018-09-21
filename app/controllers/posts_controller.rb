@@ -1,8 +1,7 @@
 class PostsController < ApplicationController
- # before_action :set_post, only: [:show, :edit, :update, :destroy]
-
   # GET /posts
   # GET /posts.json
+  # TODO: check reslt
   def index
     @result = Post::Index.()
   end
@@ -10,17 +9,20 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    # TODO: check reslt
     @result = Post::Show.(params: params )
     #puts "Result => #{@result[:model].inspect}"
   end
 
   # GET /posts/new
   def new
+    # TODO: check reslt
     @result = Post::Create.(params: params)
   end
 
   # GET /posts/1/edit
   def edit
+    # TODO: check reslt
     @result = Post::Update::Present.(params: params)
 
   end
@@ -29,6 +31,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     result = Post::Create.(params: params)
+    #binding.pry
     #puts "Result Create => #{result.inspect}"
     if result.success?
       flash.notice = "The post \"#{params[:post][:title]}\" was successfully saved!"
@@ -80,7 +83,7 @@ class PostsController < ApplicationController
     #puts "Result Delete => #{@result.inspect}"
     #puts "Params Delete => #{params.inspect}"
 
-    flash.notice = "The post was successfully deleted!"
+    flash.notice = "The post was successfully deleted!" #How to notice a title of deleted post?
     redirect_to posts_path
 
 =begin

@@ -1,5 +1,3 @@
-require "trailblazer/operation"
-
 class Post::Delete < Trailblazer::Operation
 
   step Model(Post, :find_by)

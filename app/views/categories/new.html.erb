@@ -1,0 +1,12 @@
+<% if notice %>
+    <div class="notification is-danger">
+      <button class="delete"></button>
+      <p id="notice"><%= notice %></p>
+    </div>
+<% end %>
+
+<h1 class="has-text-success">New Category</h1>
+
+<%= render 'form', category: @cat[:model] %>
+
+<%= link_to 'Back', categories_path %>
