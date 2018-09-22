@@ -18,7 +18,7 @@
   </thead>
 
   <tbody>
-    <% @result["post"].each do |post| %>
+    <% @result.each do |post| %>
       <tr>
         <td><%= Category.find_by_id(post.category_id).name %></td>
         <td><%= post.title %></td>

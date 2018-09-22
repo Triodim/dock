@@ -13,7 +13,7 @@
 
  <div class="field control">
     <%= form.label :category_id, class:'label'%>
-    <%= form.select :category_id, options_for_select(Category.all.collect{|x| [x.name, x.id]}) %>
+    <%= form.select :category_id, options_for_select(@cats.collect{|x| [x.name, x.id]}) %>
   </div>
 
   <div class="field control">

@@ -1,29 +1,33 @@
 class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
-  # TODO: check reslt
+  # TODO: check reslut
   def index
-    @result = Post::Index.()
+    @result = Post::Index.()["post"]
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
-    # TODO: check reslt
-    @result = Post::Show.(params: params )
-    #puts "Result => #{@result[:model].inspect}"
+
+    @result = Post::Show.(params: params )[:model]
+
+    #puts "Result => #{@result.inspect}"
   end
 
   # GET /posts/new
   def new
-    # TODO: check reslt
-    @result = Post::Create.(params: params)
+
+    @result = Post::Create.(params: params)[:model]
+    @cats = Category::Index.()["category"]
+
   end
 
   # GET /posts/1/edit
   def edit
-    # TODO: check reslt
-    @result = Post::Update::Present.(params: params)
+
+    @result = Post::Update::Present.(params: params)[:model]
+    @cats = Category::Index.()["category"]
 
   end
 
@@ -63,17 +67,7 @@ class PostsController < ApplicationController
       redirect_to edit_post_path(@result[:model])
     end
 
-=begin
-    respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-        format.json { render :show, status: :ok, location: @post }
-      else
-        format.html { render :edit }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
-    end
-=end
+
   end
 
   # DELETE /posts/1
@@ -86,25 +80,6 @@ class PostsController < ApplicationController
     flash.notice = "The post was successfully deleted!" #How to notice a title of deleted post?
     redirect_to posts_path
 
-=begin
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-      format.json { head :no_content }
-    end
-=end
   end
 
-=begin
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def post_params
-      params.require(:post).permit(:title, :body)
-    end
-=end
 end
