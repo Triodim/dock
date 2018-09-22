@@ -10,6 +10,7 @@
 <table>
   <thead>
     <tr>
+      <th>Category</th>
       <th>Title</th>
       <th>Body</th>
       <th colspan="3"></th>
@@ -19,6 +20,7 @@
   <tbody>
     <% @result["post"].each do |post| %>
       <tr>
+        <td><%= Category.find_by_id(post.category_id).name %></td>
         <td><%= post.title %></td>
         <td><%= post.body  %></td>
         <td><%= link_to 'Show', post , class: 'button is-link is-outlined' %></td>

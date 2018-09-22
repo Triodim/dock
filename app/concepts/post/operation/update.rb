@@ -11,13 +11,6 @@ class Post::Update < Trailblazer::Operation
   step Contract::Validate( key: :post )
   step Contract::Persist()
 
-=begin
-  step :note
 
-  def note(options, *)
-    puts "Model is => #{options.inspect}"
-    true
-  end
-=end
 
 end

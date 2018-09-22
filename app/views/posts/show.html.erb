@@ -1,6 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Category:</strong>
+
+  <%= Category.find_by_id(@result[:model].category_id).name %>
+</p>
+
+<p>
   <strong>Title:</strong>
 
   <%= @result[:model].title %>
