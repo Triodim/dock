@@ -3,19 +3,19 @@
 <p>
   <strong>Category:</strong>
 
-  <%= Category.find_by_id(@result.category_id).name %>
+  <%= @cat_name %>
 </p>
 
 <p>
   <strong>Title:</strong>
 
-  <%= @result.title %>
+  <%= @post.title %>
 </p>
 
 <p>
   <strong>Body:</strong>
-  <%= @result.body %>
+  <%= @post.body %>
 </p>
 
-<%= link_to 'Edit', edit_post_path(@result) %> |
+<%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>

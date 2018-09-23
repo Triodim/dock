@@ -1,12 +1,7 @@
-<% if notice %>
-  <div class="notification is-danger">
-    <button class="delete"></button>
-      <p id="notice"><%= notice %></p>
-  </div>
-<% end %>
+<p id="notice"><%= notice %></p>
 
 <h1 class="has-text-success">New Post</h1>
 
-<%= render 'form', post: @result %>
+<%= render 'form', post: @post %>
 
 <%= link_to 'Back', posts_path , class:'button is-link'%>

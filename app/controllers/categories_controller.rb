@@ -4,25 +4,24 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @cats = Category::Index.()
+    @cats = Category::Index.()[:model]
+    #puts @cats.inspect
   end
 
   # GET /categories/1
   # GET /categories/1.json
   def show
-    # TODO: check reslt
-    @cat = Category::Show.(params: params )
-    #puts "Cat result => #{@cat[:model].inspect}"
+    @cat = Category::Show.(params: params )[:model]
   end
 
   # GET /categories/new
   def new
-    @cat = Category::Create.(params: params)
+    @cat = Category::Create.(params: params)[:model]
   end
 
   # GET /categories/1/edit
   def edit
-    @cat = Category::Update::Present.(params: params)
+    @cat = Category::Update::Present.(params: params)[:model]
   end
 
   # POST /categories
@@ -32,7 +31,7 @@ class CategoriesController < ApplicationController
     #binding.pry
     #puts "Cat Create => #{cat.inspect}"
     if cat.success?
-      flash.notice = "The post \"#{params[:category][:name]}\" was successfully saved!"
+      flash.notice = "The category \"#{params[:category][:name]}\" was successfully saved!"
       redirect_to categories_path
     else
       name = cat["result.contract.default"].errors.messages[:name][0]
@@ -50,7 +49,7 @@ class CategoriesController < ApplicationController
     #puts "Cat Update => #{@cat["contract.default"]}"
 
     if @cat.success?
-      flash.notice = "The post \"#{params[:category][:name]}\" was successfully saved!"
+      flash.notice = "The category \"#{params[:category][:name]}\" was successfully saved!"
       redirect_to categories_path
     else
       name = @cat["contract.default"].errors[:name][0]
@@ -63,7 +62,7 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1.json
   def destroy
     @cat = Category::Delete.(params: params)
-    flash.notice = "The category was successfully deleted!" #How to notice a title of deleted post?
+    flash.notice = "The category was successfully deleted!"
     redirect_to categories_path
   end
 

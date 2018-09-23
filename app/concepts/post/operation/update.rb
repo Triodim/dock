@@ -11,6 +11,4 @@ class Post::Update < Trailblazer::Operation
   step Contract::Validate( key: :post )
   step Contract::Persist()
 
-
-
 end

@@ -1,9 +1,4 @@
-<% if notice %>
-  <div class="notification is-success">
-    <button class="delete"></button>
-      <p id="notice"><%= notice %></p>
-  </div>
-<% end %>
+<p id="notice"><%= notice %></p>
 
 <h1>Posts</h1>
 
@@ -18,9 +13,9 @@
   </thead>
 
   <tbody>
-    <% @result.each do |post| %>
+    <% @posts.each do |post| %>
       <tr>
-        <td><%= Category.find_by_id(post.category_id).name %></td>
+        <td><%= @cats.assoc(post.category_id)[1] %></td>
         <td><%= post.title %></td>
         <td><%= post.body  %></td>
         <td><%= link_to 'Show', post , class: 'button is-link is-outlined' %></td>

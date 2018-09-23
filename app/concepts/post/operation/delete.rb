@@ -5,7 +5,6 @@ class Post::Delete < Trailblazer::Operation
 
 
   def delete(options, model:, **)
-    options["title"] = model.title
     model.destroy
   end
 

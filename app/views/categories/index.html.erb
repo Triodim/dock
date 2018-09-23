@@ -11,7 +11,7 @@
   </thead>
 
   <tbody>
-    <% @cats["category"].each do |category| %>
+    <% @cats.each do |category| %>
       <tr>
         <td><%= category.name %></td>
         <td><%= link_to 'Show', category %></td>

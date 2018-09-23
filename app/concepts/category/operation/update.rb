@@ -1,7 +1,7 @@
 class Category::Update < Trailblazer::Operation
 
   class Present < Trailblazer::Operation
-    step Model(Category, :find_by)
+    step Category::Show #Model(Category, :find_by)
     step Contract::Build( constant: Category::Contract::Create )
   end
 
