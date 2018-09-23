@@ -4,12 +4,22 @@
     <title>Dock</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class='<%= controller.controller_name %>'>
+    <section class="section">
+      <div class="container">
+          <ul>
+            <li><a href="/">Posts</a></li>
+            <li><a href="/categories/">Categories</a></li>
+
+          </ul>
+            <%= yield %>
+      </div>
+    </section>
   </body>
 </html>
