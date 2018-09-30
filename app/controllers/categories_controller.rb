@@ -15,7 +15,6 @@ class CategoriesController < ApplicationController
 
   end
 
-
   def show
     #@cat = Category::Show.(params: params)[:model]
 
