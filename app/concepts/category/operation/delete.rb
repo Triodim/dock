@@ -5,7 +5,7 @@ class Category::Delete < Trailblazer::Operation
 
 
   def delete(options, model:, **)
-    options["name"] = model.name
+    #options["name"] = model.name
     model.destroy
   end
 

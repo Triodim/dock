@@ -32,6 +32,11 @@ gem 'trailblazer-rails'
 gem 'reform'
 gem 'reform-rails'
 
+#Representers
+gem 'roar', github: 'trailblazer/roar'
+# gem 'representable'
+gem 'multi_json'
+
 #For docker environment
 gem 'dotenv-rails'
 

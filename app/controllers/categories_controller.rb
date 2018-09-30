@@ -1,52 +1,80 @@
 class CategoriesController < ApplicationController
-  #before_action :set_category, only: [:show, :edit, :update, :destroy]
 
-  # GET /categories
-  # GET /categories.json
+
   def index
-    @cats = Category::Index.()[:model]
-    #puts @cats.inspect
-  end
+    # @cats = Category::Index.()[:model]
 
-  # GET /categories/1
-  # GET /categories/1.json
-  def show
-    @cat = Category::Show.(params: params )[:model]
-  end
+  result = Category::Index.()
 
-  # GET /categories/new
-  def new
-    @cat = Category::Create.(params: params)[:model]
-  end
-
-  # GET /categories/1/edit
-  def edit
-    @cat = Category::Update::Present.(params: params)[:model]
-  end
-
-  # POST /categories
-  # POST /categories.json
-  def create
-    cat = Category::Create.(params: params)
-    #binding.pry
-    #puts "Cat Create => #{cat.inspect}"
-    if cat.success?
-      flash.notice = "The category \"#{params[:category][:name]}\" was successfully saved!"
-      redirect_to categories_path
+    if result.success?
+      @cats = result[:model]
     else
-      name = cat["result.contract.default"].errors.messages[:name][0]
-      flash.notice = "Sorry, not saved! The problem is that: \"#{name}\"."
+      flash.notice = 'Sorry, there are no saved categories!'
       redirect_to new_category_path
     end
+
   end
 
 
-  # PATCH/PUT /categories/1
-  # PATCH/PUT /categories/1.json
-  def update
-    @cat = Category::Update.(params: params)
+  def show
+    #@cat = Category::Show.(params: params)[:model]
 
-    #puts "Cat Update => #{@cat["contract.default"]}"
+    result = Category::Show.(params: params)
+
+    if result.success?
+      @cat = result[:model]
+    else
+      flash.notice = 'The category was not found!'
+      redirect_to categories_path
+    end
+
+  end
+
+  def new
+  #@cat = Category::Create::Present.(params: params)[:model]
+
+  result = Category::Create::Present.(params: params)
+
+    if result.success?
+      @cat = result[:model]
+    else
+      flash.notice = 'The page was not found!'
+      redirect_to categories_path
+    end
+
+  end
+
+  def edit
+    # @cat = Category::Update::Present.(params: params)[:model]
+
+    result = Category::Update::Present.(params: params)
+    if result.success?
+      @cat = result[:model]
+    else
+      flash.notice = 'The category was not found!'
+      redirect_to categories_path
+    end
+
+
+  end
+
+  def create
+
+    cat = Category::Create.(params: params)
+    if cat.success?
+      flash.notice = "The category \"#{cat[:model][:name]}\" was successfully saved!"
+      redirect_to categories_path
+    else
+      error_message = cat["result.contract.default"].errors.messages[:name][0]
+      flash.notice = "Sorry, not saved! The problem is that: \"#{error_message}\"."
+      redirect_to new_category_path
+    end
+
+  end
+
+  def update
+
+    @cat = Category::Update.(params: params)
 
     if @cat.success?
       flash.notice = "The category \"#{params[:category][:name]}\" was successfully saved!"
@@ -56,14 +84,20 @@ class CategoriesController < ApplicationController
       flash.notice = "Sorry, not update! The problem is that: \"#{name}\"."
       redirect_to edit_category_path(@cat[:model])
     end
+
   end
 
-  # DELETE /categories/1
-  # DELETE /categories/1.json
   def destroy
-    @cat = Category::Delete.(params: params)
-    flash.notice = "The category was successfully deleted!"
-    redirect_to categories_path
+    # @cat = Category::Delete.(params: params)
+    result = Category::Delete.(params: params)
+
+    if result.success?
+      flash.notice = "The category was successfully deleted!"
+      redirect_to categories_path
+    else
+      flash.notice = "The category was not found!"
+      redirect_to categories_path
+    end
   end
 
 end
