@@ -28,6 +28,9 @@ gem 'webpacker'
 gem 'trailblazer'
 gem 'trailblazer-rails'
 
+# JSON WebTokens
+gem 'jwt'
+
 #Reform
 gem 'reform'
 gem 'reform-rails'
@@ -47,6 +50,9 @@ gem 'bulma-rails'
 gem 'trailblazer-cells'
 gem 'cells-erb'         # Or cells-haml, cells-slim, cells-hamlit.
 gem 'cells-rails'
+
+# Use ActiveModel has_secure_password
+gem 'bcrypt'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

@@ -3,13 +3,19 @@ class PostsController < ApplicationController
   def index
 
      result = Post::Index.()
+     result_cat = Category::Index.()
      #binding.pry
 
-     if result.success?
-       @posts = result[:model]
+     if result_cat.success?
+       if result.success?
+        @posts = result[:model]
+       else
+        flash.notice = 'Sorry, there are no saved posts!'
+        redirect_to new_post_path
+       end
      else
-       flash.notice = 'Sorry, there are no saved posts!'
-       redirect_to new_post_path
+       flash.notice = 'Sorry, there are no saved categories!'
+       redirect_to new_category_path
      end
 
   end
