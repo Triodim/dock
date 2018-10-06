@@ -4,6 +4,10 @@
   <strong>Name:</strong>
   <%= @cat.name %>
 </p>
+<p>
+  <strong>Owner:</strong>
+  <%= @cat.user.nickname if @cat.user %>
+</p>
 
 <%= link_to 'Edit', edit_category_path(@cat) %> |
 <%= link_to 'Back', categories_path %>

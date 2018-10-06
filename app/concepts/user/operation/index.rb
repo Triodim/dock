@@ -1,4 +1,4 @@
-class Post::Index < Trailblazer::Operation
+class User::Index < Trailblazer::Operation
 
   step :show_all
 
@@ -6,8 +6,7 @@ class Post::Index < Trailblazer::Operation
 
     # options[:model] = ::Post.joins(:category).select('posts.*, categories.name as cat_name')
 
-    result = ::Post.joins(:category).select('posts.*, categories.name as cat_name')
-    #puts "Posts join = > #{result.inspect}"
+    result = ::User.where(active: true)
     if result.empty?
       return false
     else

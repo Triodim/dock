@@ -4,7 +4,16 @@ class UsersController < ApplicationController
   # # GET /users
   # # GET /users.json
   def index
-    @users = User.all
+    result = User::Index.()
+    #binding.pry
+
+      if result.success?
+        @users = result[:model]
+      else
+        flash.notice = 'Sorry, there are no saved users!'
+        redirect_to new_user_path
+      end
+
   end
 
   # GET /users/1
@@ -27,7 +36,13 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
+    result = User::Create::Present.(params: params)
+    if result.success?
+      @user = result[:model]
+    else
+      flash.notice = 'The page was not found!'
+      redirect_to users_path
+    end
   end
 
   # GET /users/1/edit
@@ -70,29 +85,32 @@ class UsersController < ApplicationController
       redirect_to users_path
     else
       flash.notice = "Sorry, not update!#{@user["contract.default"].errors.messages}"
-      #puts "Error =>#{@user["contract.default"].errors.messages.inspect}"
       redirect_to edit_user_path(@user[:model])
     end
-    # respond_to do |format|
-    #   if @user.update(user_params)
-    #     format.html { redirect_to @user, notice: 'User was successfully updated.' }
-    #     format.json { render :show, status: :ok, location: @user }
-    #   else
-    #     format.html { render :edit }
-    #     format.json { render json: @user.errors, status: :unprocessable_entity }
-    #   end
-    # end
+
   end
 
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+
+    user = User::Show.(params: params)
+
+    if user.success?
+      user[:model][:active] = false
+      user[:model].save
+      flash.notice = "User #{user[:model][:nickname]} was deleted"
+      redirect_to users_path
+    else
+      flash.notice = "User was not found"
+      redirect_to users_path
     end
   end
+    # @user.destroy
+    # respond_to do |format|
+    #   format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+    #   format.json { head :no_content }
+    # end
 
   # private
   #   # Use callbacks to share common setup or constraints between actions.
@@ -104,4 +122,5 @@ class UsersController < ApplicationController
   #   def user_params
   #     params.require(:user).permit(:nickname, :email, :password, :password_confirmation, :avatar, :active)
   #   end
+
 end

@@ -29,7 +29,7 @@ gem 'trailblazer'
 gem 'trailblazer-rails'
 
 # JSON WebTokens
-gem 'jwt'
+#gem 'jwt'
 
 #Reform
 gem 'reform'

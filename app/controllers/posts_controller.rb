@@ -38,10 +38,7 @@ class PostsController < ApplicationController
   end
 
   def new
-
-    #@post = Post::Create::Present.(params: params)[:model]
-
-    result = Post::Create::Present.(params: params)
+    result = Post::Create::Present.(params: params, user: current_user)
     if result.success?
       @post = result[:model]
       @cats = Category::Index.()[:model]
@@ -72,16 +69,15 @@ class PostsController < ApplicationController
 
 
   def create
-
-    result = Post::Create.(params: params)
+    result = Post::Create.(params: params, user: current_user)
 
     if result.success?
       flash.notice = "The post \"#{result[:model][:title]}\" was successfully saved!"
       redirect_to posts_path
     else
-      title = result["result.contract.default"].errors.messages[:title][0]
-      body = result["result.contract.default"].errors.messages[:body][0]
-      flash.notice = "Sorry, not saved! The problem is that: \"#{title || body}\"."
+      # title = result["result.contract.default"].errors.messages[:title][0]
+      # body = result["result.contract.default"].errors.messages[:body][0]
+      flash.notice = "Sorry, not saved! The problem is that: \"#{result["result.contract.default"].errors.messages}\"."
       redirect_to new_post_path
     end
 

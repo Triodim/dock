@@ -1,11 +1,10 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Users</h1>
 
 <table>
   <thead>
     <tr>
       <th>Name</th>
+      <th>ID</th>
       <th>Email</th>
       <th>Avatar</th>
       <th>Status</th>
@@ -17,6 +16,7 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.nickname %></td>
+        <td><%= user.id %></td>
         <td><%= user.email %></td>
         <td><%= user.avatar %></td>
         <td><%= user.active %></td>

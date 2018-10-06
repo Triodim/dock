@@ -10,15 +10,19 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class='<%= controller.controller_name %>'>
+  <body>
   <p id="notice"><%= notice %></p>
     <section class="section">
       <div class="container">
           <ul>
+            <li><a href="/login/">Login</a></li>
             <li><a href="/users/">Users</a></li>
             <li><a href="/">Posts</a></li>
             <li><a href="/categories/">Categories</a></li>
-
+            <% if session[:user_id] %>
+                <li>User <%= session[:user_nickname] %></li>
+                <li><%= button_to 'Logout', logout_path, method: :delete %></li>
+            <% end %>
           </ul>
             <%= yield %>
       </div>

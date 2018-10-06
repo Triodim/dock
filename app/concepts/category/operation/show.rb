@@ -6,6 +6,7 @@ class Category::Show < Trailblazer::Operation
   step :model
 
   def model(options, params:, **)
-    options[:model] = Category.find_by(id: params[:id])
+    #options[:model] = Category.find_by(id: params[:id])
+    options[:model] = ::Category.includes(:user).where(categories: {id: params[:id]}).first
   end
 end

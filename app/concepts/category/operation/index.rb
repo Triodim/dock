@@ -1,10 +1,10 @@
 class Category::Index < Trailblazer::Operation
 
-  step :show_all_cats
+  step :show_all
 
-  def show_all_cats(options, **)
-    #options[:model] = ::Category.all
-  result = ::Category.all
+  def show_all(options, **)
+  #result = ::Category.all
+  result = ::Category.includes(:user)
     if result.empty?
       return false
     else
