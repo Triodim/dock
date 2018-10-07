@@ -17,7 +17,10 @@ class Post::Show < Trailblazer::Operation
 
   def find_post(options, **)
     #binding.pry
-    options[:model] = ::Post.joins(:category)
+    # options[:model] = ::Post.joins(:category)
+    #                         .where(category_id: options[:model].category_id)
+    #                         .select('posts.*, categories.name as cat_name').first
+    options[:model] = ::Post.joins(:category, :user)
                             .where(category_id: options[:model].category_id)
                             .select('posts.*, categories.name as cat_name').first
 

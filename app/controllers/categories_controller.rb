@@ -22,7 +22,7 @@ class CategoriesController < ApplicationController
 
   def new
     #binding.pry
-    result = Category::Create::Present.(params: params)
+    result = Category::Create::Present.(params: params, user: current_user)
     if result.success?
       @cat = result[:model]
     else
@@ -45,8 +45,8 @@ class CategoriesController < ApplicationController
   def create
 
     #cat = Category::Create.(params: params, user_id: session[:user_id])
-    params[:category][:user_id] = current_user.id
-    cat = Category::Create.(params: params)#, user: current_user)
+    #params[:category][:user_id] = current_user.id
+    cat = Category::Create.(params: params, user: current_user)
 
       if cat.success?
         flash.notice = "The category \"#{cat[:model][:name]}\" was successfully saved!"

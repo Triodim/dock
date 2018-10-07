@@ -4,8 +4,6 @@ class PostsController < ApplicationController
 
      result = Post::Index.()
      result_cat = Category::Index.()
-     #binding.pry
-
      if result_cat.success?
        if result.success?
         @posts = result[:model]
@@ -21,18 +19,12 @@ class PostsController < ApplicationController
   end
 
   def show
-
     result = Post::Show.(params: params)
-
     if result.success?
-
       @post = result[:model]
-
     else
-
       flash.notice = 'The post was not found!'
       redirect_to posts_path
-
     end
 
   end

@@ -3,11 +3,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.find_by(nickname: params[:nickname])
-    if @user && @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      session[:user_nickname] = @user.nickname
-      redirect_to users_path, notice: "User #{@user.nickname} successfull logged in!"
+    result = Session::Create.(params: params)
+    if result.success?
+      session[:user_id] = result[:model][:id]
+      session[:user_nickname] = result[:model][:nickname]
+      redirect_to users_path, notice: "User #{result[:model][:nickname]} successfull logged in!"
     else
       redirect_to login_url, notice: "Invalid user/password combination"
     end
