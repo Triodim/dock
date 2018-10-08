@@ -5,14 +5,11 @@ class Post::Index < Trailblazer::Operation
   def show_all(options, **)
 
     # options[:model] = ::Post.joins(:category).select('posts.*, categories.name as cat_name')
+    #result = ::Post.joins(:category).select('posts.*, categories.name as cat_name')
 
-    result = ::Post.joins(:category).select('posts.*, categories.name as cat_name')
-    #puts "Posts join = > #{result.inspect}"
-    if result.empty?
-      return false
-    else
-      options[:model] = result
-    end
+    options[:model] = ::Post.joins(:category).select('posts.*, categories.name as cat_name')
+
+    options[:model].present?
 
   end
 

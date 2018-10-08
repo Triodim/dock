@@ -77,14 +77,9 @@ class CategoriesController < ApplicationController
   def destroy
 
     result = Category::Delete.(params: params)
+    flash.notice = result.success? ? "The category was successfully deleted!" : "The category was not found!"
+    redirect_to categories_path
 
-    if result.success?
-      flash.notice = "The category was successfully deleted!"
-      redirect_to categories_path
-    else
-      flash.notice = "The category was not found!"
-      redirect_to categories_path
-    end
   end
 
 end

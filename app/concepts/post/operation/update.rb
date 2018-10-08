@@ -1,5 +1,3 @@
-require "trailblazer/operation"
-
 class Post::Update < Trailblazer::Operation
 
   class Present < Trailblazer::Operation
