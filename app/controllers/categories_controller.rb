@@ -11,7 +11,6 @@ class CategoriesController < ApplicationController
 
   def show
     result = Category::Show.(params: params)
-    #puts "Result show -> #{result[:model].user.nickname}"
     if result.success?
       @cat = result[:model]
     else
@@ -21,33 +20,27 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    #binding.pry
-    result = Category::Create::Present.(params: params, user: current_user)
+    result = Category::Create::Present.(params: params, current_user: current_user)
     if result.success?
       @cat = result[:model]
     else
-      flash.notice = 'The page was not found!'
+      flash.notice = result["result.policy.default"]["message"]
       redirect_to categories_path
     end
   end
 
   def edit
-    result = Category::Update::Present.(params: params)
+    result = Category::Update::Present.(params: params, current_user: current_user)
     if result.success?
       @cat = result[:model]
     else
-      flash.notice = 'The category was not found!'
+      flash.notice = 'Only admin can do this!'
       redirect_to categories_path
     end
-
   end
 
   def create
-
-    #cat = Category::Create.(params: params, user_id: session[:user_id])
-    #params[:category][:user_id] = current_user.id
-    cat = Category::Create.(params: params, user: current_user)
-
+    cat = Category::Create.(params: params, current_user: current_user)
       if cat.success?
         flash.notice = "The category \"#{cat[:model][:name]}\" was successfully saved!"
         redirect_to categories_path
@@ -56,13 +49,10 @@ class CategoriesController < ApplicationController
         flash.notice = "Sorry, not saved! The problem is that: \"#{error_message}\"."
         redirect_to new_category_path
       end
-
   end
 
   def update
-
-    @cat = Category::Update.(params: params)
-
+    @cat = Category::Update.(params: params, current_user: current_user)
     if @cat.success?
       flash.notice = "The category \"#{params[:category][:name]}\" was successfully saved!"
       redirect_to categories_path
@@ -71,15 +61,11 @@ class CategoriesController < ApplicationController
       flash.notice = "Sorry, not update! The problem is that: \"#{name}\"."
       redirect_to edit_category_path(@cat[:model])
     end
-
   end
 
   def destroy
-
-    result = Category::Delete.(params: params)
-    flash.notice = result.success? ? "The category was successfully deleted!" : "The category was not found!"
+    result = Category::Delete.(params: params, current_user: current_user)
+    flash.notice = result.success? ? "The category was successfully deleted!" : "You are not admin, sorry!"
     redirect_to categories_path
-
   end
-
 end

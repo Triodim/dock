@@ -2,20 +2,19 @@ class PostsController < ApplicationController
 
   def index
 
-     result = Post::Index.()
-     result_cat = Category::Index.()
-     if result_cat.success?
-       if result.success?
+    result_cat = Category::Index.()
+    result = Post::Index.()
+    if result_cat.success?
+      if result.success?
         @posts = result[:model]
-       else
+      else
         flash.notice = 'Sorry, there are no saved posts!'
         redirect_to new_post_path
-       end
-     else
-       flash.notice = 'Sorry, there are no saved categories!'
-       redirect_to new_category_path
-     end
-
+      end
+    else
+      flash.notice = 'Sorry, there are no saved categories!'
+      redirect_to new_category_path
+    end
   end
 
   def show
@@ -26,11 +25,11 @@ class PostsController < ApplicationController
       flash.notice = 'The post was not found!'
       redirect_to posts_path
     end
-
   end
 
   def new
-    result = Post::Create::Present.(params: params, user: current_user)
+    result = Post::Create::Present.(params: params, current_user: current_user)
+    return unless result['result.policy.default'].success?
     if result.success?
       @post = result[:model]
       @cats = Category::Index.()[:model]
@@ -38,17 +37,10 @@ class PostsController < ApplicationController
       flash.notice = 'The page was not found!'
       redirect_to posts_path
     end
-
-
   end
 
-
   def edit
-
-    #@post = Post::Update::Present.(params: params)[:model]
-
-    result = Post::Update::Present.(params: params)
-
+    result = Post::Update::Present.(params: params, current_user: current_user)
     if result.success?
       @cats = Category::Index.()[:model]
       @post = result[:model]
@@ -56,30 +48,21 @@ class PostsController < ApplicationController
       flash.notice = 'The post was not found!'
       redirect_to posts_path
     end
-
   end
 
-
   def create
-    result = Post::Create.(params: params, user: current_user)
-
+    result = Post::Create.(params: params, current_user: current_user)
     if result.success?
       flash.notice = "The post \"#{result[:model][:title]}\" was successfully saved!"
       redirect_to posts_path
     else
-      # title = result["result.contract.default"].errors.messages[:title][0]
-      # body = result["result.contract.default"].errors.messages[:body][0]
       flash.notice = "Sorry, not saved! The problem is that: \"#{result["result.contract.default"].errors.messages}\"."
       redirect_to new_post_path
     end
-
   end
 
-
   def update
-
-    @post = Post::Update.(params: params)
-
+    @post = Post::Update.(params: params, current_user: current_user)
     if @post.success?
       flash.notice = "The post \"#{@post[:model][:title]}\" was successfully saved!"
       redirect_to posts_path
@@ -89,15 +72,10 @@ class PostsController < ApplicationController
       flash.notice = "Sorry, not update! The problem is that: \"#{title || body}\"."
       redirect_to edit_post_path(@post[:model])
     end
-
   end
 
   def destroy
-
-    #@post = Post::Delete.(params: params)
-
-    result = Post::Delete.(params: params)
-
+    result = Post::Delete.(params: params, current_user: current_user)
     if result.success?
       flash.notice = "The post was successfully deleted!"
       redirect_to posts_path
@@ -105,7 +83,6 @@ class PostsController < ApplicationController
       flash.notice = "The post was not found!"
       redirect_to posts_path
     end
-
   end
 
 end

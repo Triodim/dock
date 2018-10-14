@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+
 ruby '2.4.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -53,6 +54,12 @@ gem 'cells-rails'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt'
+
+#Use pundit for auth
+gem 'pundit', github: 'varvet/pundit'
+
+#Use cloudinary for handle images
+gem 'cloudinary'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

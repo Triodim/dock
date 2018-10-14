@@ -1,31 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Dock</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+  <title>Dock</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <script defer src="https://use.fontawesome.com/releases/v5.1.0/js/all.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-  <body>
-  <p id="notice"><%= notice %></p>
-    <section class="section">
-      <div class="container">
-          <ul>
-            <li><a href="/login/">Login</a></li>
-            <li><a href="/users/">Users</a></li>
-            <li><a href="/">Posts</a></li>
-            <li><a href="/categories/">Categories</a></li>
-            <% if session[:user_id] %>
-                <li>User <%= session[:user_nickname] %></li>
-                <li><%= button_to 'Logout', logout_path, method: :delete %></li>
-            <% end %>
-          </ul>
-            <%= yield %>
+<body>
+<nav class="navbar ">
+  <div id="navMenubd-example" class="navbar-menu">
+    <div class="navbar-start">
+      <div class="navbar-item">
+        <a class="button is-primary" href="/">
+            <span class="icon">
+              <i class="fa fa-home"></i>
+            </span>
+        </a>
       </div>
-    </section>
-  </body>
+      <div class="navbar-item">
+        <a class="button is-link is-outlined" href="/categories/">
+          Categories
+        </a>
+      </div>
+      <div class="navbar-item">
+        <a class="button is-link is-outlined" href="/posts/">
+          Posts
+        </a>
+      </div>
+      <div class="navbar-item">
+        <a class="button is-link is-outlined" href="/users/">
+          Users
+        </a>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="field is-grouped">
+          <% if current_user %>
+              <p class="control">
+                <a class="button is-link" href="/users/<%= current_user.id %>">
+                    <span class="icon">
+                      <i class="fa fa-user-tie"></i>
+                    </span>
+
+                  <span>
+                      User <%= current_user.nickname %>
+                    </span>
+                </a>
+              </p>
+              <p class="control">
+                <a class="button is-primary" href="/logout/" data-method="delete">
+                    <span class="icon">
+                      <i class="fa fa-sign-in-alt"></i>
+                    </span>
+                  <span>Logout</span>
+
+                </a>
+              </p>
+          <% else %>
+              <p class="control">
+                <a class="button is-primary" href="/login/">
+                <span class="icon">
+                  <i class="fa fa-sign-in-alt"></i>
+                </span>
+                  <span>Login</span>
+                </a>
+              </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        <p id="notice"><%= notice %></p>
+      </h1>
+      <%= yield %>
+    </div>
+  </div>
+</section>
+
+</body>
 </html>
