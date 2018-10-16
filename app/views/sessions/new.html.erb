@@ -1,0 +1,21 @@
+<%= form_tag do %>
+
+    <p>Please Log In</p>
+
+      <div>
+        <%= label_tag :nickname, 'Name:' %>
+        <%= text_field_tag :nickname, params[:nickname] %>
+      </div>
+
+      <div>
+        <%= label_tag :password, 'Password:' %>
+        <%= password_field_tag :password, params[:password] %>
+      </div>
+
+      <div>
+        <%= submit_tag "Login" %>
+      </div>
+
+<% end %>
+
+

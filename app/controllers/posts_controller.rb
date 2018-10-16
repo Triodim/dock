@@ -1,74 +1,81 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
 
-  # GET /posts
-  # GET /posts.json
   def index
-    @posts = Post.all
+    result = Post::Index.()
+    if result.success?
+      @posts = result[:model]
+    else
+      flash.notice = 'Sorry, there are no saved posts!'
+      redirect_to new_post_path
+    end
   end
 
-  # GET /posts/1
-  # GET /posts/1.json
   def show
+    result = Post::Show.(params: params)
+    if result.success?
+      @post = result[:model]
+    else
+      flash.notice = 'The post was not found!'
+      redirect_to posts_path
+    end
   end
 
-  # GET /posts/new
   def new
-    @post = Post.new
+    result = Post::Create::Present.(params: params, current_user: current_user)
+    return unless result['result.policy.default'].success?
+    if result.success?
+      @post = result[:model]
+      @cats = Category::Index.()[:model]
+    else
+      flash.notice = 'The page was not found!'
+      redirect_to posts_path
+    end
   end
 
-  # GET /posts/1/edit
   def edit
+    result = Post::Update::Present.(params: params, current_user: current_user)
+    if result.success?
+      @cats = Category::Index.()[:model]
+      @post = result[:model]
+    else
+      flash.notice = 'You can edit only your posts!'
+      redirect_to posts_path
+    end
   end
 
-  # POST /posts
-  # POST /posts.json
   def create
-    @post = Post.new(post_params)
-
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    result = Post::Create.(params: params, current_user: current_user)
+    if result.success?
+      flash.notice = "The post \"#{result[:model][:title]}\" was successfully saved!"
+      redirect_to posts_path
+    else
+      flash.notice = "Sorry, not saved! The problem is that: \"#{result["result.contract.default"].errors.messages}\"."
+      redirect_to new_post_path
     end
   end
 
-  # PATCH/PUT /posts/1
-  # PATCH/PUT /posts/1.json
   def update
-    respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-        format.json { render :show, status: :ok, location: @post }
-      else
-        format.html { render :edit }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    @post = Post::Update.(params: params, current_user: current_user)
+    if @post.success?
+      flash.notice = "The post \"#{@post[:model][:title]}\" was successfully saved!"
+      redirect_to posts_path
+    else
+      title = @post["contract.default"].errors[:title][0]
+      body = @post["contract.default"].errors[:body][0]
+      flash.notice = "Sorry, not update! The problem is that: \"#{title || body}\"."
+      redirect_to edit_post_path(@post[:model])
     end
   end
 
-  # DELETE /posts/1
-  # DELETE /posts/1.json
   def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-      format.json { head :no_content }
+    result = Post::Delete.(params: params, current_user: current_user)
+    if result.success?
+      flash.notice = "The post was successfully deleted!"
+      redirect_to posts_path
+    else
+      flash.notice = "You can delete only your posts!"
+      redirect_to posts_path
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def post_params
-      params.require(:post).permit(:title, :body)
-    end
 end
