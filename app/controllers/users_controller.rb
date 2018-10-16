@@ -84,11 +84,10 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
 
-    user = User::Show.(params: params)
+    user = User::Show.(params: params, current_user: current_user)
 
     if user.success?
-      user[:model][:active] = false
-      user[:model].save
+      del = User::Delete.(params: params)[:model]
       flash.notice = "User #{user[:model][:nickname]} was deleted"
       redirect_to users_path
     else

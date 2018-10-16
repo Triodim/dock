@@ -15,10 +15,7 @@ class Post::Show < Trailblazer::Operation
 
   def find_post(options, **)
      post = Post.find_by_id(options[:params][:id])
-     options[:model] = ::Post.joins(:category, :user)
-                            .where(category_id: post.category_id)
-                            .select('posts.*, categories.name as cat_name').first
+     options[:model] = ::Post.includes(:category, :user).where(category_id: post.category_id).first
   end
-
 
 end

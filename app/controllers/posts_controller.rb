@@ -1,19 +1,12 @@
 class PostsController < ApplicationController
 
   def index
-
-    result_cat = Category::Index.()
     result = Post::Index.()
-    if result_cat.success?
-      if result.success?
-        @posts = result[:model]
-      else
-        flash.notice = 'Sorry, there are no saved posts!'
-        redirect_to new_post_path
-      end
+    if result.success?
+      @posts = result[:model]
     else
-      flash.notice = 'Sorry, there are no saved categories!'
-      redirect_to new_category_path
+      flash.notice = 'Sorry, there are no saved posts!'
+      redirect_to new_post_path
     end
   end
 
@@ -45,7 +38,7 @@ class PostsController < ApplicationController
       @cats = Category::Index.()[:model]
       @post = result[:model]
     else
-      flash.notice = 'The post was not found!'
+      flash.notice = 'You can edit only your posts!'
       redirect_to posts_path
     end
   end
@@ -80,7 +73,7 @@ class PostsController < ApplicationController
       flash.notice = "The post was successfully deleted!"
       redirect_to posts_path
     else
-      flash.notice = "The post was not found!"
+      flash.notice = "You can delete only your posts!"
       redirect_to posts_path
     end
   end

@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    redirect_to posts_path, notice: "User #{current_user.nickname} logged out"
     session[:user_id] = nil
-    redirect_to posts_path, notice: "User #{session[:user_nickname]} logged out"
   end
 end
