@@ -60,6 +60,7 @@ gem 'pundit', github: 'varvet/pundit'
 
 #Use cloudinary for handle images
 gem 'cloudinary'
+gem 'carrierwave'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

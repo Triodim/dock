@@ -55,6 +55,7 @@ class UsersController < ApplicationController
   def create
 
     result = User::Create.(params: params)
+    binding.pry
     if result.success?
       flash.notice = "User \"#{result[:model][:nickname]}\" was successfully created!"
       redirect_to users_path
@@ -63,6 +64,13 @@ class UsersController < ApplicationController
       redirect_to new_user_path #, alert: "Sorry, user not saved! Something went wrong!"
     end
 
+  end
+
+  def upload
+    uploaded_file = params[:avatar]
+    File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
+      file.write(uploaded_file.read)
+    end
   end
 
   # PATCH/PUT /users/1
@@ -88,6 +96,7 @@ class UsersController < ApplicationController
 
     if user.success?
       del = User::Delete.(params: params)[:model]
+
       flash.notice = "User #{user[:model][:nickname]} was deleted"
       redirect_to users_path
     else
