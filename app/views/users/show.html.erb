@@ -12,7 +12,12 @@
 
 <p>
   <strong>Avatar:</strong>
-  <%= @user.avatar %>
+  <% if @user.avatar != '' %>
+    <td><%= cl_image_tag(@user.avatar, :crop => :fill, :width => 120, :height => 80) %></td>
+  <% else %>
+    <td><%= cl_image_tag("samples/cloudinary-icon.png", :height => 110, :crop => "scale") %></td>
+  <% end %>
+
 </p>
 
 <p>

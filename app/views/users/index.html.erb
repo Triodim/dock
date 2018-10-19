@@ -18,7 +18,11 @@
         <td><%= user.nickname %></td>
         <td><%= user.id %></td>
         <td><%= user.email %></td>
-        <td><%= user.avatar %></td>
+        <% if user.avatar != '' %>
+          <td><%= cl_image_tag(user.avatar, :crop => :fill, :width => 120, :height => 80) %></td>
+        <% else %>
+          <td><%= cl_image_tag("samples/cloudinary-icon.png", :height=>80, :crop=>"scale") %></td>
+        <% end %>
         <td><%= user.active %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>

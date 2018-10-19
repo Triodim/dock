@@ -57,15 +57,18 @@ class UsersController < ApplicationController
     # + step 2 - upload img to the cloud
     # + step 3 - get img public_id
     # + step 4 - set public_id to user.avatar and save to db
-    #step 5 - take the img to the show index views
-    #step 6 - get all this stuff to the trb operation
+    # + step 5 - take the img to the +show +index views
+    # + step 6 - edit view of edit))
+    # + step 7 - update update action)) i`m at one`s best))
+    #step 8 - get all this stuff to the trb operation
 
     uploaded_file = params[:user][:avatar]
-    File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
+    path = Rails.root.join('public', 'uploads', uploaded_file.original_filename)
+    File.open(path, 'wb') do |file|
       file.write(uploaded_file.read)
     end
 
-    avatar_public_id = Cloudinary::Uploader.upload('/dock/public/uploads/1_2.jpg')['public_id']
+    avatar_public_id = Cloudinary::Uploader.upload(path)['public_id']
 
     params[:user][:avatar] = avatar_public_id
 
@@ -82,16 +85,19 @@ class UsersController < ApplicationController
 
   end
 
-  def upload
-    uploaded_file = params[:avatar]
-    File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
-      file.write(uploaded_file.read)
-    end
-  end
-
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+
+    uploaded_file = params[:user][:avatar]
+    path = Rails.root.join('public', 'uploads', uploaded_file.original_filename)
+    File.open(path, 'wb') do |file|
+      file.write(uploaded_file.read)
+    end
+
+    avatar_public_id = Cloudinary::Uploader.upload(path)['public_id']
+
+    params[:user][:avatar] = avatar_public_id
 
     @user = User::Update.(params: params)
     if @user.success?
