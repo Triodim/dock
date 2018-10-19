@@ -60,7 +60,8 @@ class UsersController < ApplicationController
     # + step 5 - take the img to the +show +index views
     # + step 6 - edit view of edit))
     # + step 7 - update update action)) i`m at one`s best))
-    #step 8 - get all this stuff to the trb operation
+    # + step 8 - get all this stuff to the trb create operation
+    # step 9 - get all this stuff to the trb update operation
 
     result = User::Create.(params: params)
 
@@ -69,7 +70,7 @@ class UsersController < ApplicationController
       redirect_to users_path
     else
       flash.notice = "Sorry, user not saved! Something went wrong!"
-      redirect_to new_user_path #, alert: "Sorry, user not saved! Something went wrong!"
+      redirect_to new_user_path
     end
 
   end
@@ -77,16 +78,6 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-
-    uploaded_file = params[:user][:avatar]
-    path = Rails.root.join('public', 'uploads', uploaded_file.original_filename)
-    File.open(path, 'wb') do |file|
-      file.write(uploaded_file.read)
-    end
-
-    avatar_public_id = Cloudinary::Uploader.upload(path)['public_id']
-
-    params[:user][:avatar] = avatar_public_id
 
     @user = User::Update.(params: params)
     if @user.success?
