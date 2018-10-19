@@ -62,19 +62,8 @@ class UsersController < ApplicationController
     # + step 7 - update update action)) i`m at one`s best))
     #step 8 - get all this stuff to the trb operation
 
-    uploaded_file = params[:user][:avatar]
-    path = Rails.root.join('public', 'uploads', uploaded_file.original_filename)
-    File.open(path, 'wb') do |file|
-      file.write(uploaded_file.read)
-    end
-
-    avatar_public_id = Cloudinary::Uploader.upload(path)['public_id']
-
-    params[:user][:avatar] = avatar_public_id
-
     result = User::Create.(params: params)
 
-    binding.pry
     if result.success?
       flash.notice = "User \"#{result[:model][:nickname]}\" was successfully created!"
       redirect_to users_path
