@@ -77,6 +77,10 @@ GEM
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
       xpath (~> 3.1)
+    carrierwave (1.2.3)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     cells (4.1.7)
       declarative-builder (< 0.2.0)
       declarative-option (< 0.2.0)
@@ -306,6 +310,7 @@ DEPENDENCIES
   bulma-rails
   byebug
   capybara (>= 2.15)
+  carrierwave
   cells-erb
   cells-rails
   chromedriver-helper

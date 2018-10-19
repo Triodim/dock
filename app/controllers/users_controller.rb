@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  #before_action :set_user, only: [:show, :destroy]
 
   # # GET /users
   # # GET /users.json
@@ -53,8 +52,25 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    #TODO
+    # + step 1 - upload img from form
+    # + step 2 - upload img to the cloud
+    # + step 3 - get img public_id
+    # + step 4 - set public_id to user.avatar and save to db
+    #step 5 - take the img to the show index views
+    #step 6 - get all this stuff to the trb operation
+
+    uploaded_file = params[:user][:avatar]
+    File.open(Rails.root.join('public', 'uploads', uploaded_file.original_filename), 'wb') do |file|
+      file.write(uploaded_file.read)
+    end
+
+    avatar_public_id = Cloudinary::Uploader.upload('/dock/public/uploads/1_2.jpg')['public_id']
+
+    params[:user][:avatar] = avatar_public_id
 
     result = User::Create.(params: params)
+
     binding.pry
     if result.success?
       flash.notice = "User \"#{result[:model][:nickname]}\" was successfully created!"
