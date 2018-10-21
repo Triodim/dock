@@ -17,6 +17,7 @@ class User::Create < Trailblazer::Operation
         file.write(uploaded_file.read)
       end
       avatar_public_id = Cloudinary::Uploader.upload(path)['public_id']
+      File.delete(path)
       options[:params][:user][:avatar] = avatar_public_id
     else
       options[:params][:user][:avatar] = ''
