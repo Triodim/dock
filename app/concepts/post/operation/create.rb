@@ -7,6 +7,9 @@ class Post::Create < Trailblazer::Operation
     step Contract::Build( constant: Post::Contract::Create )
 
     def prepare_params(options, current_user:, **)
+      20.times do |index|
+        MyWorker.perform_async(index, "Bobby")
+      end
       options[:params][:post].merge!(user_id: current_user.id) if options[:params][:post].present?
     end
   end

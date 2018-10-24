@@ -11,6 +11,7 @@ services:
       - bundle_cache:/usr/local/bundle
     depends_on:
       - db
+      - sidekiq
     ports:
       - 3000:3000
     networks:
@@ -26,8 +27,31 @@ services:
     networks:
       - dock
 
+  redis:
+    image: redis:4.0-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - dock
+
+  sidekiq:
+    build: .
+    command: bundle exec sidekiq
+    volumes:
+      - .:/dock
+      - bundle_cache:/usr/local/bundle
+    env_file: .env
+    networks:
+      - dock
+    depends_on:
+      - db
+      - redis
+
 volumes: 
   bundle_cache:
+  redis_data:
 
 networks:
   dock:
