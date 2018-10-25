@@ -1,7 +1,7 @@
-# read about sidekiq guide
-# create worker
-# perfom async this worker (add it to any operation and make sure it done)
-# read about sidekiq configurations
+# + read about sidekiq guide
+# + create worker
+# + perfom async this worker (add it to any operation and make sure it done)
+# + read about sidekiq configurations
 # create worker with needed code (current task)
 # perform async this worker in trb operation
 
