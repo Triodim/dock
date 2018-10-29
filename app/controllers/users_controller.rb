@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
 
-  # # GET /users
-  # # GET /users.json
   def index
     result = User::Index.(params: params, current_user: current_user)
 
@@ -14,8 +12,6 @@ class UsersController < ApplicationController
 
   end
 
-  # GET /users/1
-  # GET /users/1.json
   def show
     result = User::Show.(params: params, current_user: current_user)
     if result.success?
@@ -26,7 +22,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/new
   def new
     result = User::Create::Present.(params: params)
     if result.success?
@@ -37,7 +32,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1/edit
   def edit
     result = User::Update::Present.(params: params)
 
@@ -49,8 +43,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users
-  # POST /users.json
   def create
     #TODO
     # + step 1 - upload img from form
@@ -66,7 +58,7 @@ class UsersController < ApplicationController
     result = User::Create.(params: params)
 
     if result.success?
-      flash.notice = "User \"#{result[:model][:nickname]}\" was successfully created!"
+      flash.notice = "User \"#{result[:model][:nickname]}\" was successfully created! " + "#{result[:ava_error]}"
       redirect_to users_path
     else
       flash.notice = "Sorry, user not saved! Something went wrong!"
@@ -75,8 +67,6 @@ class UsersController < ApplicationController
 
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
 
     @user = User::Update.(params: params)
@@ -90,15 +80,12 @@ class UsersController < ApplicationController
 
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
   def destroy
 
     user = User::Show.(params: params, current_user: current_user)
 
     if user.success?
-      del = User::Delete.(params: params)[:model]
-
+      User::Delete.(params: params)[:model]
       flash.notice = "User #{user[:model][:nickname]} was deleted"
       redirect_to users_path
     else
