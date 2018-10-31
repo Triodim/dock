@@ -1,6 +1,7 @@
 class User::Update < Trailblazer::Operation
   class Present < Trailblazer::Operation
     step Model(User, :find_by)
+    step Policy::Pundit(UserPolicy, :update?)
     step Contract::Build(constant: User::Contract::Update)
   end
 
@@ -10,7 +11,7 @@ class User::Update < Trailblazer::Operation
   success :upload_image
 
   def upload_image(options, **)
-    result = Image::Avatar.(params: options[:params], user_id: options[:model][:id])
+    result = User::UploadAvatar.(params: options[:params], user_id: options[:model][:id])
     options[:ava_error] = result[:ava_error]
   end
 
