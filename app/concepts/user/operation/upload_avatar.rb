@@ -11,9 +11,6 @@ class User::UploadAvatar < Trailblazer::Operation
       return true
     else
       options[:ava_error] = "You didn't input ava_file!"
-      user = User.find_by(id: user_id)
-      user.avatar = nil
-      user.save
       return false
     end
   end
@@ -30,10 +27,6 @@ class User::UploadAvatar < Trailblazer::Operation
     uploaded_file = options[:params][:user][:avatar]
     if  (uploaded_file.size > 4.megabytes)||(uploaded_file.content_type != "image/jpeg")
       options[:ava_error] = "Your ava is too big or not a picture"
-      user = User.find_by(id: user_id)
-      binding.pry
-      user.avatar = nil
-      user.save
       return false
     else
       return true

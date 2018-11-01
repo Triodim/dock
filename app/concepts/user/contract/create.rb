@@ -9,7 +9,6 @@ module User::Contract
     property :password
     property :password_confirmation, virtual: true
 
-    #property :avatar
     property :active
 
 
@@ -19,14 +18,6 @@ module User::Contract
 
     validates :password, presence: true
     validate :password_ok
-    # validate :avatar_ok
-    #
-    # def avatar_ok
-    #   if avatar.size > 1.megabytes
-    #     errors.add(:avatar, "Your file is too big, must be less then 10Mb")
-    #   end
-    # end
-
 
     def password_ok
       if password != password_confirmation

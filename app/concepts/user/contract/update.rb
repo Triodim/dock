@@ -9,7 +9,7 @@ module User::Contract
     # property :password
     # property :password_confirmation, virtual: true
 
-    property :avatar
+    # property :avatar
     property :active
 
 

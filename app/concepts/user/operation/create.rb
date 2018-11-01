@@ -28,8 +28,6 @@ class User::Create < Trailblazer::Operation
   success :upload_image
 
   def upload_image(options, **)
-    #result = Image::Avatar.(params: options[:params], user_id: options[:model][:id])
-
    result = User::UploadAvatar.(params: options[:params], user_id: options[:model][:id])
    options[:ava_error] = result[:ava_error]
   end
