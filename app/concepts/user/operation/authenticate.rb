@@ -1,11 +1,5 @@
 class User::Authenticate < Trailblazer::Operation
 
-  # TODO:
-  # + rename as User::Authenticate
-  # + create step which creates parameters hash
-  # + find user which has specified nickname and status active with where method
-  # + validate the obj
-
   pass :prepare_params
   step :validate_input_params
   step :find_user

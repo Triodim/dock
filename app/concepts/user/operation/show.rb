@@ -5,6 +5,7 @@ class User::Show < Trailblazer::Operation
   step Policy::Pundit(UserPolicy, :show?)
 
   def prepare_params(options, params:, **)
+    #binding.pry
     options[:params] = OpenStruct.new(params) if params.present?
   end
 

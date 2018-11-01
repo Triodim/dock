@@ -72,10 +72,9 @@ class UsersController < ApplicationController
 
   def destroy
 
-    user = User::Show.(params: params, current_user: current_user)
+    user = User::Delete.(params: params, current_user: current_user)
 
     if user.success?
-      User::Delete.(params: params)[:model]
       flash.notice = "User #{user[:model][:nickname]} was deleted"
       redirect_to users_path
     else
