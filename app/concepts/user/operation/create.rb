@@ -1,6 +1,6 @@
 class User::Create < Trailblazer::Operation
 
-# TODO
+#TODO
 # 1) for admins
 # block(delete) user - active false + delete completely all users posts, in sidekiq job + both actions wrapped as transaction
 # activate user - opposite feature
