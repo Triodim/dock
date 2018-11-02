@@ -4,6 +4,7 @@ class Image::UploadFile < Trailblazer::Operation
 
   def upload_image_to_cloud(options, path:, user_id:,**)
     public_id = Cloudinary::Uploader.upload( path, :folder => "dock/avatars/" )['public_id']
+    #TODO make it in one query with update or update_attribute
     user = User.find_by(id: user_id)
     user.avatar = public_id
     user.save
