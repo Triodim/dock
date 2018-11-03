@@ -25,7 +25,17 @@ class User::Create < Trailblazer::Operation
   step Nested(Present)
   step Contract::Validate(key: :user)
   step Contract::Persist()
+  step :is_ava_exist, pass_fast: true, Output(:failure) => :upload_image
   success :upload_image
+
+  def is_ava_exist(options, **)
+    if options[:params][:user][:avatar]
+      return false
+    else
+      options[:ava_error] = "You didn't input ava_file!"
+      return true
+    end
+  end
 
   def upload_image(options, **)
    result = User::UploadAvatar.(params: options[:params], user_id: options[:model][:id])
