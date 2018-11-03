@@ -25,7 +25,7 @@ class User::UploadAvatar < Trailblazer::Operation
 
   def validate_avatar(options, user_id:, **)
     uploaded_file = options[:params][:user][:avatar]
-    if  (uploaded_file.size > 4.megabytes)||(uploaded_file.content_type != "image/jpeg")
+    if  (uploaded_file.size > 5.megabytes)||(uploaded_file.content_type != "image/jpeg")
       options[:ava_error] = "Your ava is too big or not a picture"
       return false
     else

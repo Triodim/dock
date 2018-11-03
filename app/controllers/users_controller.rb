@@ -61,7 +61,7 @@ class UsersController < ApplicationController
 
     @user = User::Update.(params: params, current_user: current_user)
     if @user.success?
-      flash.notice = "The post \"#{@user[:model][:nickname]}\" was successfully updated! #{@user[:ava_error]}"
+      flash.notice = "The user \"#{@user[:model][:nickname]}\" was successfully updated! #{@user[:ava_error]}"
       redirect_to users_path
     else
       flash.notice = "Sorry, not update!#{@user["contract.default"].errors.messages}"
