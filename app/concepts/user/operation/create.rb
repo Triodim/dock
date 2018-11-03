@@ -25,10 +25,10 @@ class User::Create < Trailblazer::Operation
   step Nested(Present)
   step Contract::Validate(key: :user)
   step Contract::Persist()
-  step :is_ava_exist, pass_fast: true, Output(:failure) => :upload_image
+  step :ava_is_not_exist, pass_fast: true, Output(:failure) => :upload_image
   success :upload_image
 
-  def is_ava_exist(options, **)
+  def ava_is_not_exist(options, **)
     if options[:params][:user][:avatar]
       return false
     else
