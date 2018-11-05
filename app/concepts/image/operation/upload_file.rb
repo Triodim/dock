@@ -5,7 +5,7 @@ class Image::UploadFile < Trailblazer::Operation
   step :update_user_avatar
 
   def upload_file_to_cloud(options, path:, **)
-    options[:public_id] = Cloudinary::Uploader.upload( path, :folder => "dock/avatars/" )['public_id']
+    options[:public_id] = Cloudinary::Uploader.upload( path, :folder => Image::UploadPath::CloudinaryPath )['public_id']
   end
 
   def delete_file_from_server(options, path:, **)

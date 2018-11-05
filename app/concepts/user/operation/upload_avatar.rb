@@ -29,7 +29,7 @@ class User::UploadAvatar < Trailblazer::Operation
   end
 
   def upload_image_to_cloud(options, user_id:,**)
-    WorkerUploadAvatar.perform_async(options[:path], user_id)
+    UploadAvatarWorker.perform_async(options[:path], user_id)
   end
 
 end

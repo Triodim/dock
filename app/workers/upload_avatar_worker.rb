@@ -1,4 +1,4 @@
-class WorkerUploadAvatar
+class UploadAvatarWorker
   include Sidekiq::Worker
 
   def perform(path, user_id)

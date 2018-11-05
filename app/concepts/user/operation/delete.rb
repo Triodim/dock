@@ -1,10 +1,12 @@
-class User::Delete < Trailblazer::Operation
+class User::Block < Trailblazer::Operation
 
   step :find_user
   step Policy::Pundit(UserPolicy, :destroy?)
-  #step Wrap ->(*, &block) { ActiveRecord::Base.transaction do block.call end } {
-    step :set_active
-    step :set_posts_deleted_at
+  #step Wrap ->(*, &block){ ActiveRecord::Base.transaction do block.call end } {
+    step :deactivate
+    step :soft_delete_posts
+    #raise "My error to rollback transaction"
+    #step :return_false
   #}
 
   def find_user(options, params:, current_user:, **)
@@ -12,13 +14,17 @@ class User::Delete < Trailblazer::Operation
   end
 
   #TODO wrap next two steps with sql transaction
-  def set_active(options, **)
+  def deactivate(options, **)
     user = options[:model]
     user.update(active: false)
   end
 
-  def set_posts_deleted_at(options, **)
+  def soft_delete_posts(options, **)
     WorkerDeleteUsersPosts.perform_async(options[:model][:id])
   end
+
+  # def return_false(options, **)
+  #   return false
+  # end
 
 end
